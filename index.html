@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rural Skill Connect - NextMillan</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        color: #212529;
+        overflow-x: hidden;
+      }
+
+      /* Navbar Styles */
+      .navbar {
+        position: sticky;
+        top: 0;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 1.5rem 5%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .navbar.scrolled {
+        padding: 1rem 5%;
+        box-shadow: 0 5px 30px rgba(0, 0, 0, 0.15);
+      }
+
+      .logo {
+        font-size: 1.8rem;
+        font-weight: 700;
+        background: linear-gradient(45deg, #212529, #495057);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: #495057;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .nav-links a:hover {
+        color: #212529;
+      }
+
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(45deg, #212529, #495057);
+        transition: width 0.3s ease;
+      }
+
+      .nav-links a:hover::after {
+        width: 100%;
+      }
+
+      /* Hero Section */
+      .hero {
+        height: 90vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 0 2rem;
+        background: linear-gradient(135deg, #212529 0%, #343a40 100%);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.1) 0%,
+          transparent 70%
+        );
+        animation: rotate 20s linear infinite;
+      }
+
+      @keyframes rotate {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .hero h1 {
+        font-size: 4rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 1rem;
+        text-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .hero p {
+        font-size: 1.5rem;
+        color: rgba(255, 255, 255, 0.9);
+        margin-bottom: 2rem;
+        max-width: 600px;
+      }
+
+      .hero-buttons {
+        display: flex;
+        gap: 1.5rem;
+        margin-top: 1rem;
+      }
+
+      .btn {
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        font-size: 1.1rem;
+        display: inline-block;
+        text-align: center;
+      }
+
+      .btn-primary {
+        background: white;
+        color: #212529;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .btn-secondary {
+        background: transparent;
+        color: white;
+        border: 2px solid white;
+      }
+
+      .btn-organizers {
+        background: linear-gradient(45deg, #6c757d, #495057);
+        color: white;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+      }
+
+      .btn-primary:hover {
+        background: linear-gradient(45deg, #212529, #495057);
+        color: white;
+      }
+
+      /* Section Styles */
+      section {
+        padding: 5rem 10%;
+      }
+
+      .section-title {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 3rem;
+        color: #212529;
+      }
+
+      /* Problem Section */
+      .problem-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .problem-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 20px;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+
+      .problem-card:hover {
+        transform: translateY(-10px) scale(1.05);
+        box-shadow: 0 20px 40px rgba(33, 37, 41, 0.2);
+      }
+
+      .problem-card i {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        background: linear-gradient(45deg, #212529, #495057);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .problem-card h3 {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+        color: #212529;
+      }
+
+      /* Vision Section */
+      .vision {
+        background: linear-gradient(135deg, #212529 0%, #343a40 100%);
+        color: white;
+        text-align: center;
+      }
+
+      .vision-quote {
+        font-size: 3rem;
+        font-weight: 300;
+        max-width: 800px;
+        margin: 0 auto;
+        position: relative;
+        animation: glow 2s ease-in-out infinite alternate;
+      }
+
+      @keyframes glow {
+        from {
+          text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+        to {
+          text-shadow: 0 0 20px rgba(255, 255, 255, 0.8),
+            0 0 30px rgba(255, 255, 255, 0.6);
+        }
+      }
+
+      /* Features Section */
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .feature-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 20px;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(33, 37, 41, 0.2);
+      }
+
+      .feature-card i {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        background: linear-gradient(45deg, #212529, #495057);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      /* Demo Section */
+      .demo-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .demo-card {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      .demo-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(33, 37, 41, 0.2);
+      }
+
+      .demo-placeholder {
+        height: 200px;
+        background: linear-gradient(45deg, #212529, #495057);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+
+      .demo-content {
+        padding: 1.5rem;
+      }
+
+      .demo-content h3 {
+        font-size: 1.3rem;
+        margin-bottom: 0.5rem;
+        color: #212529;
+      }
+
+      /* Impact Section */
+      .impact {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        text-align: center;
+      }
+
+      .impact-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .impact-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .counter {
+        font-size: 3rem;
+        font-weight: 700;
+        background: linear-gradient(45deg, #212529, #495057);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1rem;
+      }
+
+      .impact-card p {
+        font-size: 1.1rem;
+        color: #495057;
+      }
+
+      /* CTA Section */
+      .cta {
+        text-align: center;
+        padding: 5rem 10%;
+        background: linear-gradient(135deg, #212529 0%, #343a40 100%);
+        color: white;
+      }
+
+      .cta h2 {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .cta .btn {
+        background: white;
+        color: #212529;
+        padding: 1.2rem 3rem;
+        font-size: 1.2rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .cta .btn:hover {
+        background: linear-gradient(45deg, #212529, #495057);
+        color: white;
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Footer */
+      footer {
+        background: #212529;
+        color: white;
+        padding: 3rem 10%;
+      }
+
+      .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .footer-section h3 {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+        color: #f8f9fa;
+      }
+
+      .footer-links {
+        list-style: none;
+      }
+
+      .footer-links li {
+        margin-bottom: 0.5rem;
+      }
+
+      .footer-links a {
+        color: #adb5bd;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .footer-links a:hover {
+        color: #f8f9fa;
+        padding-left: 5px;
+      }
+
+      .contact-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+      }
+
+      .contact-info div {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .contact-info i {
+        color: #f8f9fa;
+        width: 20px;
+      }
+
+      .social-icons {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .social-icons a {
+        color: white;
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+      }
+
+      .social-icons a:hover {
+        color: #adb5bd;
+        transform: translateY(-3px);
+      }
+
+      .copyright {
+        border-top: 1px solid #495057;
+        padding-top: 2rem;
+        text-align: center;
+        color: #adb5bd;
+      }
+
+      .copyright a {
+        color: #f8f9fa;
+        text-decoration: none;
+      }
+
+      .copyright a:hover {
+        text-decoration: underline;
+      }
+
+      /* Animations */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .fade-in {
+        animation: fadeIn 1s ease-out;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .navbar {
+          flex-direction: column;
+          gap: 1rem;
+          padding: 1rem;
+        }
+
+        .nav-links {
+          gap: 1rem;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+
+        .hero h1 {
+          font-size: 2.5rem;
+        }
+
+        .hero p {
+          font-size: 1.1rem;
+        }
+
+        .hero-buttons {
+          flex-direction: column;
+          gap: 1rem;
+        }
+
+        .section-title {
+          font-size: 2rem;
+        }
+
+        .vision-quote {
+          font-size: 2rem;
+        }
+
+        section {
+          padding: 3rem 5%;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .problem-grid,
+        .features-grid,
+        .impact-grid,
+        .demo-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="logo">Rural Skill Connect</div>
+      <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#features">Features</a>
+        <a href="#demo">Demo</a>
+        <a href="#impact">Impact</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+      <h1>Skill → Badge → Job</h1>
+      <p>Empowering rural youth with skills and opportunities</p>
+      <div class="hero-buttons">
+        <a href="#" class="btn btn-primary">I Need a Job</a>
+        <a href="#" class="btn btn-secondary">I Want to Hire</a>
+        <a href="#organizers" class="btn btn-organizers">Meet the Organizers</a>
+      </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section id="problem">
+      <h2 class="section-title">The Problem</h2>
+      <div class="problem-grid">
+        <div class="problem-card">
+          <i class="fas fa-ban"></i>
+          <h3>No Jobs After School</h3>
+          <p>
+            Rural youth lack access to employment opportunities after completing
+            education
+          </p>
+        </div>
+        <div class="problem-card">
+          <i class="fas fa-user-secret"></i>
+          <h3>Middlemen Cut Wages</h3>
+          <p>
+            Intermediaries take a large portion of earnings from rural workers
+          </p>
+        </div>
+        <div class="problem-card">
+          <i class="fas fa-certificate"></i>
+          <h3>No Way to Prove Skills</h3>
+          <p>
+            Lack of credible certification makes it hard to showcase abilities
+          </p>
+        </div>
+        <div class="problem-card">
+          <i class="fas fa-map-location-dot"></i>
+          <h3>Geographic Barriers</h3>
+          <p>
+            Distance from urban centers limits access to better opportunities
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Vision Section -->
+    <section class="vision">
+      <h2 class="section-title">Our Vision</h2>
+      <p class="vision-quote">Make skills the new degree.</p>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features">
+      <h2 class="section-title">Key Features</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <i class="fas fa-file-signature"></i>
+          <h3>Skill Verification</h3>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-graduation-cap"></i>
+          <h3>Micro-Training</h3>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-briefcase"></i>
+          <h3>Direct Job Board</h3>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-credit-card"></i>
+          <h3>Secure Payments</h3>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-chart-line"></i>
+          <h3>Analytics Dashboard</h3>
+        </div>
+      </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section id="demo">
+      <h2 class="section-title">Platform Demo</h2>
+      <div class="demo-grid">
+        <div class="demo-card">
+          <div class="demo-placeholder">Youth Dashboard</div>
+          <div class="demo-content">
+            <h3>Personal Skill Profile</h3>
+            <p>Track your skills, badges, and job applications in one place</p>
+          </div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-placeholder">Employer Dashboard</div>
+          <div class="demo-content">
+            <h3>Job Posting & Management</h3>
+            <p>Post jobs, review candidates, and manage your workforce</p>
+          </div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-placeholder">Training Page</div>
+          <div class="demo-content">
+            <h3>Micro-Courses</h3>
+            <p>Access bite-sized training modules to enhance your skills</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Impact Section -->
+    <section class="impact" id="impact">
+      <h2 class="section-title">Our Impact</h2>
+      <div class="impact-grid">
+        <div class="impact-card">
+          <div class="counter" id="jobs-counter">0</div>
+          <p>Jobs Created</p>
+        </div>
+        <div class="impact-card">
+          <div class="counter" id="income-counter">0</div>
+          <p>Income Secured (₹)</p>
+        </div>
+        <div class="impact-card">
+          <div class="counter" id="skills-counter">0</div>
+          <p>Skills Certified</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Organizers Section -->
+    <section id="organizers" style="background: white; padding: 5rem 10%">
+      <h2 class="section-title">Meet the Organizers</h2>
+      <div style="text-align: center; max-width: 800px; margin: 0 auto">
+        <p
+          style="
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #495057;
+            margin-bottom: 2rem;
+          "
+        >
+          Rural Skill Connect was conceptualized and developed by the visionary
+          team at NextMillan, led by Ayush Giri. Our mission is to bridge the
+          gap between rural talent and urban opportunities through innovative
+          technology solutions.
+        </p>
+        <div
+          style="
+            background: linear-gradient(135deg, #212529 0%, #343a40 100%);
+            padding: 2rem;
+            border-radius: 20px;
+            color: white;
+          "
+        >
+          <h3 style="font-size: 1.5rem; margin-bottom: 1rem">
+            NextMillan Team
+          </h3>
+          <p style="margin-bottom: 1rem">Founder & Creator: Ayush Giri</p>
+          <p style="margin-bottom: 1rem">Contact: +91 8092313311</p>
+          <p>Email: giriakg1714@gmail.com</p>
+          <button
+            onclick="window.location.href='./creator.html'"
+            style="
+              margin-top: 1rem;
+              padding: 0.8rem 1.5rem;
+              background: white;
+              color: #212529;
+              border: none;
+              border-radius: 50px;
+              font-weight: 600;
+              cursor: pointer;
+              transition: all 0.3s ease;
+            "
+            onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 5px 15px rgba(0,0,0,0.3)';"
+            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';"
+          >
+            View Creator Profile
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta" id="contact">
+      <h2>Join us in empowering India's rural youth</h2>
+      <a href="./needjob.html" class="btn">Get Started Today</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Rural Skill Connect</h3>
+          <p>
+            Empowering rural youth through skill development and direct
+            employment opportunities.
+          </p>
+          <div class="social-icons">
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#demo">Demo</a></li>
+            <li><a href="#impact">Impact</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Contact Us</h3>
+          <div class="contact-info">
+            <div>
+              <i class="fas fa-phone"></i>
+              <span>+91 8092313311</span>
+            </div>
+            <div>
+              <i class="fas fa-envelope"></i>
+              <span>giriakg1714@gmail.com</span>
+            </div>
+            <div>
+              <i class="fas fa-user"></i>
+              <span>Ayush Giri (Creator)</span>
+            </div>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Built by NextMillan</h3>
+          <ul class="footer-links">
+            <li><a href="#organizers">Meet the Team</a></li>
+            <li><a href="#">About NextMillan</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>
+          © 2023 Rural Skill Connect. All rights reserved. | Developed by
+          <a href="#organizers">NextMillan</a>
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      // Navbar scroll effect
+      window.addEventListener("scroll", function () {
+        const navbar = document.querySelector(".navbar");
+        if (window.scrollY > 50) {
+          navbar.classList.add("scrolled");
+        } else {
+          navbar.classList.remove("scrolled");
+        }
+      });
+
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        });
+      });
+
+      // Animated counters
+      function animateCounter(element, target, duration) {
+        let start = 0;
+        const increment = target / (duration / 16);
+        const timer = setInterval(() => {
+          start += increment;
+          if (start >= target) {
+            element.textContent = target.toLocaleString();
+            clearInterval(timer);
+          } else {
+            element.textContent = Math.floor(start).toLocaleString();
+          }
+        }, 16);
+      }
+
+      // Intersection Observer for counters
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              animateCounter(
+                document.getElementById("jobs-counter"),
+                15000,
+                2000
+              );
+              animateCounter(
+                document.getElementById("income-counter"),
+                25000000,
+                2000
+              );
+              animateCounter(
+                document.getElementById("skills-counter"),
+                8500,
+                2000
+              );
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.5 }
+      );
+
+      observer.observe(document.querySelector(".impact"));
+
+      // Fade-in animation for elements
+      const fadeElements = document.querySelectorAll(
+        ".problem-card, .feature-card, .demo-card, .impact-card"
+      );
+      const fadeObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("fade-in");
+              fadeObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+
+      fadeElements.forEach((element) => {
+        fadeObserver.observe(element);
+      });
+
+      // Add hover effects to cards
+      const cards = document.querySelectorAll(
+        ".problem-card, .feature-card, .demo-card"
+      );
+      cards.forEach((card) => {
+        card.addEventListener("mouseenter", function () {
+          this.style.transform = "translateY(-10px)";
+        });
+        card.addEventListener("mouseleave", function () {
+          this.style.transform = "translateY(0)";
+        });
+      });
+    </script>
+  </body>
+</html>
